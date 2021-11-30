@@ -1,0 +1,33 @@
+name: Build LaTeX document
+ on: [push]
+ jobs:
+   build_latex:
+     runs-on: ubuntu-latest
+     steps:
+       - name: Set up Git repository
+         uses: actions/checkout@v2
+       - name: pdflatex draft
+         uses: dante-ev/latex-action@latest
+         with:
+           root_file: draft.tex
+           compiler: pdflatex
+           args: -interaction=nonstopmode -shell-escape
+       - name: pdflatex main
+         uses: dante-ev/latex-action@latest
+         with:
+           root_file: draft.tex
+           compiler: pdflatex
+           args: -interaction=nonstopmode -shell-escape
+
+       - name: pdflatex statements
+         uses: dante-ev/latex-action@latest
+         with:
+           root_file: statements.tex
+           compiler: pdflatex
+
+       - name: Results
+         uses: appleboy/telegram-action@master
+         with:
+            to: ${{ secrets.TELEGRAM_TO }}
+            token: ${{ secrets.TELEGRAM_TOKEN }}
+            document: statements.pdf 
