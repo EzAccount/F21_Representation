@@ -14,6 +14,7 @@
 \def\Sympl{\rm Sympl}
 \def\Fix{\rm Fix}
 \def\char{\rm char}
+\def\aut{\rm Aut}
 \author{M. Tikhonov}
 \begin{document}
 
@@ -41,9 +42,13 @@ Theory also applies to Lie Groups, which is very interesting object as it is bot
 
 So I would generalize above to two main reasons -- it helps understands the structure of a group or some class of the groups and it appear in wide a variety of contexts.
 As a lot of algebraic structure it's a way to get an abstract way of some property accuring in different problems.
-\section{Introduction}
 
-Suppose $G$ is a \textit{finite} group and $V$ to be a vector space over a field $k$. We mainly will focus on the case $k=\mathbb{C}$.
+\section{Introduction}
+Unless specified other, suppose $G$ is a \textit{finite} group and $V$ to be a vector space over a field $k$. We mainly will focus on the case $k=\mathbb{C}$.
+
+\begin{definition}
+    Given a vector space $V$ we will denote all automorphisms $\aut(V)$ with $GL(V)$
+\end{definition}
 
 \begin{definition}
     A linear representation of $G$ of G in vector space $V$ is homomorphism $\rho: G \to GL(V), g \mapsto \rho(g)$ or $\rho_g$ for simplicity.
@@ -51,12 +56,10 @@ Suppose $G$ is a \textit{finite} group and $V$ to be a vector space over a field
 
 $V$ then is called representation space of $G$. The representation is the discribed pair $(V, \rho)$.
 
-As most definitions in mathematics besides the object we also descbire morphism structure on new class of objects.
+We shall also define morphism startucre between represntations.
+
 \begin{definition}
-    
-
- Representation homoprhism $T$ between $(V, \rho)$ and $(W, \tau)$ is vector space homomoprhism that make following diagram commute:
-
+ Representation homoprhism $T$ between $(V, \rho)$ and $(W, \tau)$ is vector space homomoprhism $T: V \to W$ that make following diagram commute:
 \end{definition}
 
 \[\begin{tikzcd}
@@ -68,30 +71,38 @@ As most definitions in mathematics besides the object we also descbire morphism 
 	\arrow["T"', from=1-1, to=3-1]
 	\arrow["{\tau(g)}"', from=3-1, to=3-3]
 \end{tikzcd}\]
-If we also know that $T$ is isomorphism of vector spaces, we call it \textit{representation isomorphism}. 
+If $T$ is isomorphism of vector spaces, then induced (by the property above) representation homorphism is \textit{representation isomophism}.
 
-Assuming that $V$ is $n-$dimensional over $\mathbb{C}$ we can pick a basis $v_1, v_2, v_3,\dots, v_n$ and a complex $n-$dimensional representation of $G$ is homomoprhism $\rho: G \to GL_n (\mathbb{C})$.
+Assume that $V$ is $n-$dimensional vector space over $\mathbb{C}$. We can pick a basis $v_1, v_2, v_3,\dots, v_n$. Then since for finite dimensional spaces we have $GL(n, C) \simeq GL(C^n)$. Then there's natural map $\rho: G\to GL_n$, which maps basis vector to corresponding column.
 
-Basic example:  trivial homomorphism that send everything to unity, which we will call trivial homomoprhism. 
+Basic example:  trivial homomorphism that send everything to unity, which we will call corresponding representation trivial. 
 To give a more constructive example consider $S_3$ acting on a set $e_1, e_2, e_3$.
-As we know $S_3$ has six elements, namely $(), (12), (23), (13), (132), (123)$. 
+As we know $S_3$ has six elements, namely $\{ (), (12), (23), (13), (132), (123) \}$. 
 Besides the trivial representation we also have a very common homomoprhism to $\mathbb{Z}_2$ usually intoduced during a first encounter of $S_n$, namely sign representation.
 Assuming $\char(k) \neq 2$, the homomoprhism is not trivial. 
 
 
-We will talk about representation of $S_n$ specifically futher later in the paper.
+We will talk about representations of $S_n$ specifically later in the paper.
 
 Notice that there's another way to look at representation of $S_3$. Pick a basis $e_1, e_2, e_3 \in GL_3 (\mathbb C)$ and consider $\rho (e_i) = e_\sigma(i)$, for $\sigma \in S_3$, i.e. permutation acting on the set of basis elements. In case of sign permutation, that means 
 if the permutation is even, we have swap of two basis vectors and a full rotation (including identity) in other case.
 
-In general case for a finite set $X$, we have a natural complex vector space given by a linear combination of the elements of $X$.
-The corresponding representation would be $\rho_g (x) = g . x$ (for all $x\in X, g \in G$)  extended to the entire space by linearity.
+In general case for a finite set $X$, we have a natural complex vector space $\mathbb{C}(X)$ given by a linear combination of the elements of $X$:
+$\forall v \in \mathbb{C}(X): v = \sum_{i=1}^n c_i x_i$, where $c_i \in \mathbb{C}, x_i \in X$
+The representation corresponding to the action $G$ on $X$ is $\rho_g (x) = g . x$ (for all $x\in X, g \in G$), which can be extended to the vector entire space by linearity.
 
 \begin{note}
-    The constructiion above can be generalized to infinite set $X$ if we restrict to only finete non-zero coefficents in linear combinations.
+    The constructiion above can be generalized to infinite set $X$ in the following way.
+    Let $x_i \in X$ be elements of the set, 
+    then vector space $\mathbb{C}(X)=\{ v, \left. \right| v = \sum_{i=1}^\infty c_i x_i\}$, where $ \{c\}_1^\infty \in \mathbb{C}, x_i \in X$, 
+    but the sequence $c$ only have finitely many non-zero elements.
 \end{note}
 
-The most common case of this construction would be the case $X = G$ which  we would call regular representation.
+The most interesting and useful case arrises if we let $X = G$ so $G$ acts on itself.
+
+\begin{definition}
+The representation arrising from $G$ acting on itself by construction above is regular representation.
+\end{definition}
 
 \begin{definition}
 
@@ -104,19 +115,21 @@ The representation of $G$ is called is irreducable if the space $V$ is not empty
 \end{lemma}
 
 
-The irreducable representation can't be a direct sum of any two representation besides $0$ and $V$.
-
 We are now ready to statement a very powerfull statement about irreducable representations.
 
 \begin{lemma}[Schur's lemma]
     Let $(V, \rho_v)$ and $(W, \rho_w)$ be irreducable representations of the same group $G$.
     \begin{enumerate}
-        \item If $T$ is homomoprhisms of representations, then it's either isomorphism or zero map.
-        \item If $G$ is finite and $T : V \to V$ is homomoprhism then $T = \lambda I$ for some colmplex number $\lambda$.
+        \item If $T: (V, \rho_v) \to (W, \rho_w)$ is representation homomoprhism, then $T=0$ or $T$ is representation isomophism.
+        \item If $G$ is finite and $T : (V, \rho_v) \to (V, rho_v) $ is endomorphism (homorphism of presentation to itself) then $T = \lambda I$ for some colmplex number $\lambda$.
     \end{enumerate}
 \end{lemma}
-\begin{proof}
-    TBD
+\begin{proof} 
+    1. Suppose there is a nontrivial representation homomoprhism $f : (V, \rho_v) \to (W, \rho_w)$. Our goal is to prove that $V \not\simeq W$. Consider the subspace: kernel $\ker f$. Since the map is representation homomoprhism for each group element there's an element in kernel, s.t. $f(\rho_v(g) x) = 0$, meaning that
+    $\ker f$ is stable under action of $G$, but we require representation to be trivial, thus $\ker = 0$ or $\ker = T$.
+
+    2. Since $T$ is a linear operator, we can consider an eigenvalue $\lambda$ of $T$. Here we use $k = \mathbb{C}$ to ensure that eigenvalue exists. Consider a map $g = f - \lambda \cdot id$, which would be a representation. If $x$ is eigenvector of $f$, then $g x = 0$, and thus $\ker g$ is non trivial. Since we know that 
+    $\ker g$ is either 0 or fullspace (since it's a irreducable representation), then $\ker g = V$ and $g$ is trivial, i.e. $f = \lambda I$.
 \end{proof}
 
 \section{Abelian groups}
