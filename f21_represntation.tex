@@ -15,12 +15,15 @@
 \def\Fix{\rm Fix}
 \def\char{\rm char}
 \def\aut{\rm Aut}
+\def\ker{\rm Ker}
+\def\im{\rm Im}
 \author{M. Tikhonov}
 \begin{document}
 
 \newtheorem{definition}{Definition}
 \newtheorem{note}{Note}
 \newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
 
 \section{Motivation}
 
@@ -62,6 +65,7 @@ We shall also define morphism startucre between represntations.
  Representation homoprhism $T$ between $(V, \rho)$ and $(W, \tau)$ is vector space homomoprhism $T: V \to W$ that make following diagram commute:
 \end{definition}
 
+
 \[\begin{tikzcd}
 	V && V \\
 	\\
@@ -73,6 +77,24 @@ We shall also define morphism startucre between represntations.
 \end{tikzcd}\]
 If $T$ is isomorphism of vector spaces, then induced (by the property above) representation homorphism is \textit{representation isomophism}.
 
+
+\begin{definition}
+    Let $V$ be a representation. We call $W$ a subrepresentation of representation $V$ if it's a subspace $W \subset V$ as a vector space and invariant under G. That is, for all $g \in G$ and for all $w \in W$ $g.w \in W$.
+\end{definition}
+
+\begin{lemma}
+    Let $W, V$ be two representation and consider $f$ being representation homomoprhism.
+    Then $\ker f \subset V$ and 
+    $\im f \subset W$ are subrepresentations.
+\end{lemma}
+
+\begin{proof}
+    By linearity we know that $\ker f \subset V$ and $\im f \subset W$ as vector spaces. Now consider arbitary $v \in \ker f$ and arbitary $g \in G$, we have:
+    $$ f(g.u) = g . f(u) = g . 0 = 0$$
+    Meaning that it is also a subrepresentation. Same way:
+    $$ f(g.v) = g. f(v) = g.w$$
+    since for any $w \in W:$ $\exists v \in V$ s.t. $f(v)=w$. But $g.w \in W$ and thus the image is subrepresentation of $W$.
+\end{proof}
 Assume that $V$ is $n-$dimensional vector space over $\mathbb{C}$. We can pick a basis $v_1, v_2, v_3,\dots, v_n$. Then since for finite dimensional spaces we have $GL(n, C) \simeq GL(C^n)$. Then there's natural map $\rho: G\to GL_n$, which maps basis vector to corresponding column.
 
 Basic example:  trivial homomorphism that send everything to unity, which we will call corresponding representation trivial. 
@@ -114,6 +136,14 @@ The representation of $G$ is called is irreducable if the space $V$ is not empty
     Every one-dimensional representation is irreducable. Any reducable representation is a direct sum of irreducable representations.
 \end{lemma}
 
+\begin{theorem}
+    Let $V$ be a representation of finite group, and $W \subset V$ be a subrepresentation. Then exists subrepresentation $U\subset V$, s.t.
+    $$ V = U \oplus W$$
+\end{theorem}
+
+\begin{proof}
+    to appear
+\end{proof}
 
 We are now ready to statement a very powerfull statement about irreducable representations.
 
@@ -125,14 +155,12 @@ We are now ready to statement a very powerfull statement about irreducable repre
     \end{enumerate}
 \end{lemma}
 \begin{proof} 
-    1. Suppose there is a nontrivial representation homomoprhism $f : (V, \rho_v) \to (W, \rho_w)$. Our goal is to prove that $V \not\simeq W$. Consider the subspace: kernel $\ker f$. Since the map is representation homomoprhism for each group element there's an element in kernel, s.t. $f(\rho_v(g) x) = 0$, meaning that
-    $\ker f$ is stable under action of $G$, but we require representation to be trivial, thus $\ker = 0$ or $\ker = T$.
-
+    1. Suppose there is a nontrivial representation homomoprhism $f : (V, \rho_v) \to (W, \rho_w)$. Our goal is to prove that $V \not\simeq W$. Consider the subspace: kernel $\ker f$. Since the map is representation homomoprhism the kernel is subrepresentation, thus $\ker f = 0$ or $\ker f = T$. Thus $f$ has to be trivial, which is the desired controduction. 
     2. Since $T$ is a linear operator, we can consider an eigenvalue $\lambda$ of $T$. Here we use $k = \mathbb{C}$ to ensure that eigenvalue exists. Consider a map $g = f - \lambda \cdot id$, which would be a representation. If $x$ is eigenvector of $f$, then $g x = 0$, and thus $\ker g$ is non trivial. Since we know that 
-    $\ker g$ is either 0 or fullspace (since it's a irreducable representation), then $\ker g = V$ and $g$ is trivial, i.e. $f = \lambda I$.
+    $\ker g$ is either 0 or fullspace as subrepresentation, we have $\ker g = V$ and $g$ is trivial, i.e. $f = \lambda I$.
 \end{proof}
 
-\section{Abelian groups}
+
 
 \section{Characters}
 
