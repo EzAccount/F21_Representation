@@ -1,4 +1,5 @@
 \documentclass{beamer}
+\usepackage{tikz-cd}
 \usetheme{Berlin}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -39,5 +40,163 @@
         \item Examples
     \end{itemize}
 \end{frame}
+
+\begin{frame}{What is representation?}
+
+\end{frame}
+
+\begin{frame}{Formal definition}
+    Let $V$ be a vector space over some field $k$. Denote invertible homomoprhism of $V$ with $GL(V)$.
+
+    Let $G$ be a finite group.
+    \begin{definition}
+        A linear representation of $G$ in $V$ is a pair $(V, \rho)$ where $\rho: G \to GL(V)$ is a group homomoprhism
+    \end{definition}
+
+    For convenience we will sometime denote the pair $(V, \rho)$ with $\rho_V$.
+
+    \begin{example}
+        Let $\rho_V : V \to GL(V): v \mapsto 1$.
+        Clearly that is a representation. We will call it trivial.
+    \end{example}
+
+\end{frame}
+
+\begin{frame}[fragile]
+    \begin{definition}
+        Homomorphism of representations $V, \rho$ and $W, \tau$ is a vector space homomoprhism $V \to W$ making following diagram commute:
+    \end{definition}
+    \[\begin{tikzcd}
+        V && V \\
+        \\
+        W && W
+        \arrow["{\rho(g)}", from=1-1, to=1-3]
+        \arrow["T", from=1-3, to=3-3]
+        \arrow["T"', from=1-1, to=3-1]
+        \arrow["{\tau(g)}"', from=3-1, to=3-3]
+    \end{tikzcd}\]
+    If $T$ is isomorphism of vector spaces it is also isomorphism of representations.
+\end{frame}
+
+
+
+\begin{frame}{Subrepresentations}
+    \begin{definition}
+        Let $V$ be a representation. We call $W$ a subrepresentation of representation $V$ if it's a subspace $W\subset V$ as a vector space and invariant under $G$. That is, for all $g \in G$ and for all $w \in W$ $g.w \in W$.
+    \end{definition}
+
+    \begin{lemma}
+        Let $W, V$ be two representation and consider $f$ being representation homomoprhism. Then $\ker f \subset V$ and $\im \ f \subset W$ are subrepresentations.
+
+    \end{lemma}
+
+\end{frame}
+
+\begin{frame}{Induced representation}
+    Let $G$ be a group, X be a G-homogenous space. Let $L(X)$ be a space of functions on $X$. Then we have representation $T$ on $L(X)$ given as:
+    $$\left[T(g) f\right] (x) = f (xg) $$
+    Now fix a point and pick a stationary subgroup $H$ of that point. Then
+    $$ F(g) = f(x_0 g) $$
+    will be a subrepresentation corresponding to a subspace invariant under $H$.
+
+    Now let's generalize this observation. Let $U$ be a representation of some subgroup $H$ in finite-dimensional $V$.
+    Consider a space of functions $F$, s.t. $F\ni f: G \to V$, s.t.
+    $$F(hg) = U(h) \cdot F(g)$$
+    where $h\in H, g \in G$.
+
+    \begin{definition}
+        $F$ defined as above called induced representation of $G$ by subgroup $H$.
+    \end{definition}
+\end{frame}
+
+\begin{frame}{Reducability}
+    \begin{definition}
+        The representation of $G$ is called irreducible if the space $V$ is not empty and no nontrivial subspace is invariant under $G$. Or equivalently irreducible representation has no nontrivial subrepresentations.
+    \end{definition}
+    \begin{lemma}
+        Any reducible representation is a direct sum of irreducible representation.
+    \end{lemma}
+\end{frame}
+
+\begin{frame}{Schur's lemma}
+    \begin{lemma}[Schur's lemma]
+        Let $(V, \rho_v)$ and $(W, \rho_w)$ be irreducible representations of the same group $G$.
+        \begin{enumerate}
+            \item If $T: (V, \rho_v) \to (W, \rho_w)$ is representation homomoprhism, then $T=0$ or $T$ is representation isomophism.
+            \item If $G$ is finite and $T : (V, \rho_v) \to (V, \rho_v) $ is endomorphism (homorphism of presentation to itself) then $T = \lambda I$ for some colmplex number $\lambda$.
+        \end{enumerate}
+    \end{lemma}
+
+\end{frame}
+
+
+\begin{frame}{"Average" on cube problem}
+\begin{example}
+    Pick a die. Each step we replace the number on each side with average of neighbor sides.
+What would be the numbers written after long time?
+\end{example}
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}{Cube transformation group}
+    \begin{lemma}
+        Group of symmetries that preserve cube is isomorphic to $S_4$.
+    \end{lemma}
+    Now let's fix one face on the cube. Consider subgroup of $S_4$ that also preserve that side is Z/4Z.
+
+    Now define $V_r$ to be a space of all functions defined on our cube, which is $6-$ dimensional real space. Now pick trivial representation of $Z/4Z$ in $V_r$ and induce a representation $T$ on $G$.
+\end{frame}
+
+\begin{frame}{Solution via representations}
+    Consider an operator $$[Lf] (x) = \frac{1}{4}\sum_{y\in CF} f(y)$$,
+    where $x \in CF$ is particular face in the set $CF$ of cube faces, $f$ is some functions on the set of spaces and $L$ is an operator on the space of functions.
+    
+    \begin{lemma}
+        Action of $L$ and action of $G$ commute.
+    \end{lemma}
+
+    Let's pay closer attention to representation $T$. Linking index $c(T,T)$ is $3$, meaning that $T$ is sum of $3$ non-trivial representations.    
+
+    Let's denote them as  $T = T_1 \oplus T_2 \oplus T_3$.
+
+\end{frame}
+
+
+\begin{frame}
+    To each subrepresentation there should be a corresponding invariant subspace.
+
+    We can pick invariant subspaces of $V_r$ in the following way: 
+    
+    $V_1$: constant functions, 
+    
+    $V_2$: even functions which sums (over cube) to 0 
+    
+    $V_3$: odd functions.
+    
+ \end{frame}
+
+ \begin{frame}
+    On constant function space one can see that eigenvalue is $\lambda_1=1$. 
+    
+    For an operator from $V_2$ we can choose a function that is $1$ on the first pair of cube's faces, $0$ on the other, and $-1$ on the last one.
+    
+    Thus $\lambda_2 = \frac{-1}{2}$. 
+
+    
+    For a representative of function $V_3$: fix a face and assign $1$ to it, $-1$ to opposite face, and $0$ to all other faces. 
+    
+    Thus $\lambda_3 = 0$.
+
+    Clearly in the limit we fall into $V_1$. 
+
+    Now since projection of initial function $f = (1,2,3,4,5,6)$ on $V_1$ is constant function $\frac{21}{6}$, those are desired numbers.
+ \end{frame}
+
+
 
 \end{document}
