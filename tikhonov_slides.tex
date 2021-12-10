@@ -20,6 +20,7 @@
 \def\ker{\rm Ker\ }
 \def\im{\rm Im}
 \def\id{\rm id}
+\def\Tr{\rm Tr}
 \author{M. Tikhonov}
 
 \title{Introduction to representation theory}
@@ -32,25 +33,32 @@
 
 \frame{\titlepage}
 
+\begin{frame}{"Average" on cube problem}
+    \begin{example}
+        Pick a die. Each step we replace the number on each side with average of neighbor sides.
+    What would be the numbers written after long time?
+    \end{example}
+\end{frame}
+
+\begin{frame}{What is a representation?}
+
+\end{frame}
+
 \begin{frame}{Outline}
-    \begin{itemize}
-        \item Motivation 
-        \item Main definitions and theorems
+    \begin{itemize} 
+        \item Main definitions and some theorems
         \item Characters
-        \item Examples
+        \item Frobenius duality
+        \item Solution
     \end{itemize}
 \end{frame}
 
-\begin{frame}{What is representation?}
-
-\end{frame}
-
 \begin{frame}{Formal definition}
-    Let $V$ be a vector space over some field $k$. Denote invertible homomoprhism of $V$ with $GL(V)$.
+    Let $V$ be a vector space over some field $k$. Let $GL(V)$ be the group of invertible homomorphisms $V \to V$.
 
     Let $G$ be a finite group.
     \begin{definition}
-        A linear representation of $G$ in $V$ is a pair $(V, \rho)$ where $\rho: G \to GL(V)$ is a group homomoprhism
+        A linear representation of $G$ in $V$ is a pair $(V, \rho)$ where $\rho: G \to GL(V)$ is a group homomorphism
     \end{definition}
 
     For convenience we will sometime denote the pair $(V, \rho)$ with $\rho_V$.
@@ -64,7 +72,7 @@
 
 \begin{frame}[fragile]
     \begin{definition}
-        Homomorphism of representations $V, \rho$ and $W, \tau$ is a vector space homomoprhism $V \to W$ making following diagram commute:
+        Homomorphism of representations $(V, \rho)$ and $(W, \tau)$ is a vector space homomoprhism $V \to W$ making the following diagram commute:
     \end{definition}
     \[\begin{tikzcd}
         V && V \\
@@ -75,30 +83,51 @@
         \arrow["T"', from=1-1, to=3-1]
         \arrow["{\tau(g)}"', from=3-1, to=3-3]
     \end{tikzcd}\]
-    If $T$ is isomorphism of vector spaces it is also isomorphism of representations.
+    If $T$ is isomorphism of vector spaces, then induced (by the property above) representation homorphism is \textit{representation isomophism}.
 \end{frame}
 
 
 
 \begin{frame}{Subrepresentations}
     \begin{definition}
-        Let $V$ be a representation. We call $W$ a subrepresentation of representation $V$ if it's a subspace $W\subset V$ as a vector space and invariant under $G$. That is, for all $g \in G$ and for all $w \in W$ $g.w \in W$.
+        Let $V$ be a representation. We call $W$ a subrepresentation of representation $V$ if it's a subspace $W\subset V$ as a vector space and invariant under $G$. That is, for all $g \in G$ and for all $w \in W$ we have $g.w \in W$.
     \end{definition}
 
     \begin{lemma}
-        Let $W, V$ be two representation and consider $f$ being representation homomoprhism. Then $\ker f \subset V$ and $\im \ f \subset W$ are subrepresentations.
+        Let $W, V$ be two representation and let $f$ be a representation homomoprhism $W$ to $V$. Then $\ker f \subset V$ and $\im \ f \subset W$ are subrepresentations.
+    \end{lemma}
 
+\end{frame}
+
+\begin{frame}{Reducability}
+    \begin{definition}
+        The representation of $G$ is called irreducible if the space $V$ is not empty and no nontrivial subspace is invariant under $G$. Or equivalently irreducible representation has no nontrivial subrepresentations.
+    \end{definition}
+    \begin{lemma}
+        If $k = \mathbb{C}$ any representation of a finite group is a direct sum of irreducible representations.
+    \end{lemma}
+\end{frame}
+
+\begin{frame}{Schur's lemma}
+    \begin{lemma}[Schur's lemma]
+        Let $(V, \rho_v)$ and $(W, \rho_w)$ be irreducible representations of the same group $G$.
+        \begin{enumerate}
+            \item If $T: (V, \rho_v) \to (W, \rho_w)$ is a   representation homomoprhism, then $T=0$ or $T$ is a representation isomophism.
+            \item If $G$ is finite and $T : (V, \rho_v) \to (V, \rho_v) $ is and endomorphism (homomorphism of representation to itself) then $T = \lambda I$ for some field element $\lambda$.
+        \end{enumerate}
     \end{lemma}
 
 \end{frame}
 
 \begin{frame}{Induced representation}
-    Let $G$ be a group, X be a G-homogenous space. Let $L(X)$ be a space of functions on $X$. Then we have representation $T$ on $L(X)$ given as:
-    $$\left[T(g) f\right] (x) = f (xg) $$
-    Now fix a point and pick a stationary subgroup $H$ of that point. Then
-    $$ F(g) = f(x_0 g) $$
+    Let $G$ be a group, that acts on finite set X. Let $L(X)$ be a space of functions on $X$. Then we have representation $T$ on $L(X)$ given as:
+    $$\left[T(g) f\right] (x) = f (x g^{-1}) $$
+    Now fix a point $x_0$ and pick a stationary subgroup $H$ of that point. Then
+    $$ F(g) = f(x_0 g^{-1}) $$
     will be a subrepresentation corresponding to a subspace invariant under $H$.
+\end{frame}
 
+\begin{frame}{Induced representation}
     Now let's generalize this observation. Let $U$ be a representation of some subgroup $H$ in finite-dimensional $V$.
     Consider a space of functions $F$, s.t. $F\ni f: G \to V$, s.t.
     $$F(hg) = U(h) \cdot F(g)$$
@@ -109,24 +138,33 @@
     \end{definition}
 \end{frame}
 
-\begin{frame}{Reducability}
+
+\begin{frame}{Characters}
+    Let $T$ be representation of group $G$, then the character $\chi$:
     \begin{definition}
-        The representation of $G$ is called irreducible if the space $V$ is not empty and no nontrivial subspace is invariant under $G$. Or equivalently irreducible representation has no nontrivial subrepresentations.
+        $$\chi_T (g) = \Tr \ T (g) $$
     \end{definition}
-    \begin{lemma}
-        Any reducible representation is a direct sum of irreducible representation.
-    \end{lemma}
+    \begin{theorem}
+    Irreducible of $G$ in finite dimensional space if fully defined by character function.
+    \end{theorem}
+    What is $\chi (e)$ in terms of the representation space?
 \end{frame}
 
-\begin{frame}{Schur's lemma}
-    \begin{lemma}[Schur's lemma]
-        Let $(V, \rho_v)$ and $(W, \rho_w)$ be irreducible representations of the same group $G$.
-        \begin{enumerate}
-            \item If $T: (V, \rho_v) \to (W, \rho_w)$ is representation homomoprhism, then $T=0$ or $T$ is representation isomophism.
-            \item If $G$ is finite and $T : (V, \rho_v) \to (V, \rho_v) $ is endomorphism (homorphism of presentation to itself) then $T = \lambda I$ for some colmplex number $\lambda$.
-        \end{enumerate}
-    \end{lemma}
+\begin{frame}{Characters}
+    To avoid using measure theory, we will define
+    \begin{definition}
+        $$(f,y) := \frac{1}{|G|} \sum_{g \in G} f(g) \overline{y(g)}$$
+    \end{definition}
+    \begin{theorem}
+        Characters of irreducible representations are orthogonal with respect to scalar product above. 
+    \end{theorem}
+\end{frame}
 
+\begin{frame}{Frobenius duality}
+    Let $H < G$ be groups, and let $\chi_H$ be a character defining some representation of $H$, $\chi_G$ a character of a representation of $G$ in the same space, then:
+    \begin{theorem}
+        $$ \left( Ind_G \chi_H, \chi_G \right) = \left( \chi_H, \chi_G \left. \right|_H \right) $$
+    \end{theorem}
 \end{frame}
 
 
@@ -145,36 +183,35 @@ What would be the numbers written after long time?
 
 \begin{frame}{Cube transformation group}
     \begin{lemma}
-        Group of symmetries that preserve cube is isomorphic to $S_4$.
+        Group $G$ of orientation-preserving symmetries of cube is isomorphic to $S_4$.
     \end{lemma}
-    Now let's fix one face on the cube. Consider subgroup of $S_4$ that also preserve that side is Z/4Z.
+    Now let's fix one face on the cube. The subgroup $Z/4Z$ of $S_4$ that preserve particular side.
 
-    Now define $V_r$ to be a space of all functions defined on our cube, which is $6-$ dimensional real space. Now pick trivial representation of $Z/4Z$ in $V_r$ and induce a representation $T$ on $G$.
+    Now define $V_r$ to be the space of all functions defined on the faces of our cube, which is the $6-$ dimensional real space. Now pick the trivial representation of $Z/4Z$ in $V_r$ and induce a representation $T$ on $G$.
 \end{frame}
 
 \begin{frame}{Solution via representations}
-    Consider an operator $$[Lf] (x) = \frac{1}{4}\sum_{y\in CF} f(y)$$,
-    where $x \in CF$ is particular face in the set $CF$ of cube faces, $f$ is some functions on the set of spaces and $L$ is an operator on the space of functions.
+    Consider an operator $$[Lf] (x) = \frac{1}{4}\sum_{\substack{y\in CF \\ (x, y)}} f(y),$$
+    where $x \in CF$ is particular face in the set $CF$ of cube faces, $f$ is some function on the set of spaces and $L$ is an operator on the space of functions.
     
     \begin{lemma}
         Action of $L$ and action of $G$ commute.
     \end{lemma}
 
-    Let's pay closer attention to representation $T$. Linking index $c(T,T)$ is $3$, meaning that $T$ is sum of $3$ non-trivial representations.    
+    Let's pay closer attention to the representation $T$. It's induced from representation of $Z/4Z$, thus decomposes into 3 irreducibles:
 
     Let's denote them as  $T = T_1 \oplus T_2 \oplus T_3$.
-
 \end{frame}
 
 
 \begin{frame}
-    To each subrepresentation there should be a corresponding invariant subspace.
+    For each subrepresentation there should be a corresponding invariant subspace.
 
     We can pick invariant subspaces of $V_r$ in the following way: 
     
     $V_1$: constant functions, 
     
-    $V_2$: even functions which sums (over cube) to 0 
+    $V_2$: even functions which sum (over cube) to 0 
     
     $V_3$: odd functions.
     
