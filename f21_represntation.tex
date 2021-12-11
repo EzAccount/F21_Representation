@@ -18,6 +18,7 @@
 \def\ker{\rm Ker\ }
 \def\im{\rm Im}
 \def\id{\rm id}
+\def\Tr{\rm Tr}
 \author{M. Tikhonov}
 \begin{document}
 
@@ -25,119 +26,83 @@
 \newtheorem{note}{Note}
 \newtheorem{lemma}{Lemma}
 \newtheorem{theorem}{Theorem}
+\newtheorem{example}{Ex.}
+\newtheorem{claim}{Claim}
 
 \section{Motivation}
 
 Representation theory, informally, is a way to transfer properties of a group $G$  into the language of linear algebra. 
-It started as study of symmetries -- as discribtion of rotation and refectional matrices in euclidean, spherical and hyperbolic geometry. 
+It started as study of symmetries -- as description of rotation and reflectional matrices in euclidean, spherical and hyperbolic geometry. 
 Right now, one of the biggest applications in physics is either the symmetry of the system to some gauge transformations (charge, color, etc) or to geometric setup. 
 The symmetry plays a huge role in physics, allowing to simplify the calculations and express equations more generally.
 
-But representation theory appeard to be useful in diferent topics of pure mathematics.  
-In 1904, Burnisde proved his famous lemma about simplicity of a group of order $p^q q^b$ using results from finite group representation theory.
+But representation theory appeared to be useful in different topics of pure mathematics.  
+In 1904, Burnside proved his famous lemma about simplicity of a group of order $p^q q^b$ using results from finite group representation theory.
 
-Later in algebraic number theory we have representation theory appearing in Galois theory since extensions of $\mathbb{Q}$ are descbrided by finite groups.
+Later in algebraic number theory we have representation theory appearing in Galois theory since extensions of $\mathbb{Q}$ are described by finite groups.
 
 Representation theory also has a lot of applications in PDEs and ODEs as the set of solutions of the equations form a representation of the group symmetry group.
 
-Following physics, applications representation theory of geometric symmetries (mostly character theory) is very useful in chemstry to classify and descibe moleculas.
+Following physics, applications representation theory of geometric symmetries (mostly character theory) is very useful in chemistry to classify and describe molecules.
 
 Theory also applies to Lie Groups, which is very interesting object as it is both geometrical object (as manifold) and algebraic (as group).
 
 So I would generalize above to two main reasons -- it helps understands the structure of a group or some class of the groups and it appear in wide a variety of contexts.
-As a lot of algebraic structure it's a way to get an abstract way of some property accuring in different problems.
+As a lot of algebraic structure it's a way to get an abstract way of some property accruing in different problems.
 
 \section{Introduction}
 Unless specified other, suppose $G$ is a \textit{finite} group and $V$ to be a vector space over a field $k$. We mainly will focus on the case $k=\mathbb{C}$.
+Let $V$ be a vector space over some field $k$. Let $GL(V)$ be the group of invertible homomorphisms $V \to V$.
 
-\begin{definition}
-    Given a vector space $V$ we will denote all automorphisms $\aut(V)$ with $GL(V)$
-\end{definition}
+    Let $G$ be a finite group.
+    \begin{definition}
+        A linear representation of $G$ in $V$ is a pair $(V, \rho)$ where $\rho: G \to GL(V)$ is a group homomorphism
+    \end{definition}
 
-\begin{definition}
-    A linear representation of $G$ of G in vector space $V$ is homomorphism $\rho: G \to GL(V), g \mapsto \rho(g)$ or $\rho_g$ for simplicity.
-\end{definition}
+    \begin{example}
+        Let $\rho_V : G \to GL(V): g \mapsto 1$.
+        Clearly that is a representation. We will call it trivial.
+    \end{example}
 
-$V$ then is called representation space of $G$. The representation is the discribed pair $(V, \rho)$.
+    \begin{definition}
+        Homomorphism of representations $(V, \rho)$ and $(W, \tau)$ is a vector space homomoprhism $V \to W$ making the following diagram commute:
+    \end{definition}
+    \[\begin{tikzcd}
+        V && V \\
+        \\
+        W && W
+        \arrow["{\rho(g)}", from=1-1, to=1-3]
+        \arrow["T", from=1-3, to=3-3]
+        \arrow["T"', from=1-1, to=3-1]
+        \arrow["{\tau(g)}"', from=3-1, to=3-3]
+    \end{tikzcd}\]
+    If $T$ is isomorphism of vector spaces, then induced (by the property above) representation homomorphism is \textit{representation isomorphism}. of vector spaces, then induced (by the property above) representation homorphism is \textit{representation isomophism}.
 
-We shall also define morphism startucre between represntations.
-
-\begin{definition}
- Representation homoprhism $T$ between $(V, \rho)$ and $(W, \tau)$ is vector space homomoprhism $T: V \to W$ that make following diagram commute:
-\end{definition}
-
-
-\[
-    \begin{tikzcd}
-	V && V \\
-	\\
-	W && W
-	\arrow["{\rho(g)}", from=1-1, to=1-3]
-	\arrow["T", from=1-3, to=3-3]
-	\arrow["T"', from=1-1, to=3-1]
-	\arrow["{\tau(g)}"', from=3-1, to=3-3]
-\end{tikzcd}
-\]
-
-If $T$ is isomorphism of vector spaces, then induced (by the property above) representation homorphism is \textit{representation isomophism}.
-
-
-\begin{definition}
-    Let $V$ be a representation. We call $W$ a subrepresentation of representation $V$ if it's a subspace $W \subset V$ as a vector space and invariant under G. That is, for all $g \in G$ and for all $w \in W$ $g.w \in W$.
-\end{definition}
-
-\begin{lemma}
-    Let $W, V$ be two representation and consider $f$ being representation homomoprhism.
-    Then $\ker f \subset V$ and 
-    $\im f \subset W$ are subrepresentations.
-\end{lemma}
-
-\begin{proof}
-    By linearity we know that $\ker f \subset V$ and $\im f \subset W$ as vector spaces. Now consider arbitary $v \in \ker f$ and arbitary $g \in G$, we have:
-    $$ f(g.u) = g . f(u) = g . 0 = 0$$
-    Meaning that it is also a subrepresentation. Same way:
-    $$ f(g.v) = g. f(v) = g.w$$
-    since for any $w \in W:$ $\exists v \in V$ s.t. $f(v)=w$. But $g.w \in W$ and thus the image is subrepresentation of $W$.
-\end{proof}
-Assume that $V$ is $n-$dimensional vector space over $\mathbb{C}$. We can pick a basis $v_1, v_2, v_3,\dots, v_n$. Then since for finite dimensional spaces we have $GL(n, C) \simeq GL(C^n)$. Then there's natural map $\rho: G\to GL_n$, which maps basis vector to corresponding column.
-
-Basic example:  trivial homomorphism that send everything to unity, which we will call corresponding representation trivial. 
-To give a more constructive example consider $S_3$ acting on a set $e_1, e_2, e_3$.
-As we know $S_3$ has six elements, namely $\{ (), (12), (23), (13), (132), (123) \}$. 
-Besides the trivial representation we also have a very common homomoprhism to $\mathbb{Z}_2$ usually intoduced during a first encounter of $S_n$, namely sign representation.
-Assuming $\char(k) \neq 2$, the homomoprhism is not trivial. 
-
-
-We will talk about representations of $S_n$ specifically later in the paper.
-
-Notice that there's another way to look at representation of $S_3$. Pick a basis $e_1, e_2, e_3 \in GL_3 (\mathbb C)$ and consider $\rho (e_i) = e_\sigma(i)$, for $\sigma \in S_3$, i.e. permutation acting on the set of basis elements. In case of sign permutation, that means 
-if the permutation is even, we have swap of two basis vectors and a full rotation (including identity) in other case.
-
-In general case for a finite set $X$, we have a natural complex vector space $\mathbb{C}(X)$ given by a linear combination of the elements of $X$:
+    In general case for a finite set $X$, we have a natural complex vector space $\mathbb{C}(X)$ given by a linear combination of the elements of $X$:
 $\forall v \in \mathbb{C}(X): v = \sum_{i=1}^n c_i x_i$, where $c_i \in \mathbb{C}, x_i \in X$
 The representation corresponding to the action $G$ on $X$ is $\rho_g (x) = g . x$ (for all $x\in X, g \in G$), which can be extended to the vector entire space by linearity.
 
 \begin{note}
-    The constructiion above can be generalized to infinite set $X$ in the following way.
+    The construction above can be generalized to infinite set $X$ in the following way.
     Let $x_i \in X$ be elements of the set, 
     then vector space $\mathbb{C}(X)=\{ v, \left. \right| v = \sum_{i=1}^\infty c_i x_i\}$, where $ \{c\}_1^\infty \in \mathbb{C}, x_i \in X$, 
     but the sequence $c$ only have finitely many non-zero elements.
 \end{note}
 
-The most interesting and useful case arrises if we let $X = G$ so $G$ acts on itself.
+The most interesting and useful case arises if we let $X = G$ so $G$ acts on itself.
 
 \begin{definition}
-The representation arrising from $G$ acting on itself by construction above is regular representation.
+The representation arisings from $G$ acting on itself by construction above is regular representation.
 \end{definition}
 
 \begin{definition}
 
-The representation of $G$ is called is irreducable if the space $V$ is not empty and no nontrivial subspace of $V$ is invariant under action of $G$.
+The representation of $G$ is called is irreducible if the space $V$ is not empty and no nontrivial subspace of $V$ is invariant under action of $G$.
     
 \end{definition}
 
 \begin{lemma}
-    Every one-dimensional representation is irreducable. Any reducable representation is a direct sum of irreducable representations.
+    Every one-dimensional representation is irreducible. Any reducible representation is a direct sum of irreducible representations.
 \end{lemma}
 
 \begin{theorem}
@@ -145,6 +110,33 @@ The representation of $G$ is called is irreducable if the space $V$ is not empty
     $$ V = U \oplus W$$
 \end{theorem}
 
+
+    \begin{definition}
+        Let $V$ be a representation. We call $W$ a subrepresentation of representation $V$ if it's a subspace $W\subset V$ as a vector space and invariant under $G$. That is, for all $g \in G$ and for all $w \in W$ we have $g.w \in W$.
+    \end{definition}
+
+    \begin{lemma}
+        Let $W, V$ be two representation and let $f$ be a representation homomoprhism $W$ to $V$. Then $\ker f \subset V$ and $\im \ f \subset W$ are subrepresentations.
+    \end{lemma}
+
+    \begin{proof}
+        By linearity we know that $\ker f \subset V$ and $\im f \subset W$ as vector spaces. Now consider arbitary $v \in \ker f$ and arbitary $g \in G$, we have:
+        $$ f(g.u) = g . f(u) = g . 0 = 0$$
+        Meaning that it is also a subrepresentation. Same way:
+        $$ f(g.v) = g. f(v) = g.w$$
+        since for any $w \in W:$ $\exists v \in V$ s.t. $f(v)=w$. But $g.w \in W$ and thus the image is subrepresentation of $W$.
+    \end{proof}
+
+    \begin{definition}
+        The representation of $G$ is called irreducible if the space $V$ is not empty and no nontrivial subspace is invariant under $G$. Or equivalently irreducible representation has no nontrivial subrepresentations.
+    \end{definition}
+
+
+
+
+\begin{lemma}
+    If $k = \mathbb{C}$ any representation of a finite group is a direct sum of irreducible representations.
+\end{lemma}
 \begin{proof}
     Let $W_0$ be a vector subspace s.t. $V = U \oplus W_0$. Then for all $v \in V$ we have $v=u+w$ for some $u \in U, w \in W_0$, moreover that pair is unique since the sum is direct. Let $\pi_0$ be projection $V \to W$ and introduce the map
     $\pi(v) = \frac 1 {|G|} \sum_g g^{-1} \pi_0 (gv)$ and claim that it is representation homomoprhism.
@@ -155,32 +147,263 @@ The representation of $G$ is called is irreducable if the space $V$ is not empty
     $$ V = U \oplus W$$ 
 \end{proof}
 
-We are now ready to statement a very powerfull statement about irreducable representations.
+\begin{example}
+    Consider group $G=S_3$ acting on a set $e_1, e_2, e_3$ as $\sigma e_i = e_{\sigma(i)}$, i.e. basis of a vector space $\mathbb{R}^3$. 
+\end{example}
+
+Recall that $S_3$ consists of following elements:
+$$ (), (1 2), (1 3), (2 3), (1 2 3), (1 3 2) $$
+
+Then under $T$: 
+\begin{equation*}
+T(e) = 
+\begin{pmatrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1
+\end{pmatrix},
+T (1\ 2) = 
+\begin{pmatrix}
+    0 & 1 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 1 
+\end{pmatrix},
+T (1\ 3) =
+\begin{pmatrix}
+    0 & 0 & 1 \\
+    0 & 1 & 0 \\
+    1 & 0 & 0 
+\end{pmatrix},
+\end{equation*}
+\begin{equation*}
+T (2\ 3) =
+\begin{pmatrix}
+    1 & 0 & 0 \\
+    0 & 0 & 1 \\
+    0 & 1 & 0 
+\end{pmatrix},
+T (1\ 2\ 3) =
+\begin{pmatrix}
+    0 & 0 & 1 \\
+    1 & 0 & 0 \\
+    0 & 1 & 0 
+\end{pmatrix},
+T (1\ 3\ 2) =
+\begin{pmatrix}
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+    1 & 0 & 0 
+\end{pmatrix}
+\end{equation*}
+
+Notice that this representation is not irreducible: let $v_0 = e_1 + e_2 + e_3$.
+Clearly $\text{span}(v_0)$ generates a subspace of $\mathbb{R}^3$ and $\forall g \in G$ we have $g. (k v_0) = k' v_0$ for some $k, k' \in \mathbb{R}$.
+In other words line generated by $v_0$ is invariant under $G$ and is a subspace, thus is a subrepresentation.
+
+Now consider subspace orthogonal to $v_0$, i.e. corresponding to equation:  $k_1 e_1 + k_2 e_2 + k_3 e_3 = 1$. 
+Pick a triangular in that plane with vertices at the end of basis vectors.
+Then since action of $G$ is mapping basis vector to another basis vector, the triangle stays invariant under $G$.
+So the plane is invariant under $G$.
+
+\begin{claim}
+    $T = T_1 \oplus T_2$, where $T_1$ is trivial and $T_2$ is irreducible two-dimensional.
+\end{claim}
+
+
+
+We are now ready to statement a powerful statement about irreducible representations.
 
 \begin{lemma}[Schur's lemma]
-    Let $(V, \rho_v)$ and $(W, \rho_w)$ be irreducable representations of the same group $G$.
+    Let $(V, \rho_v)$ and $(W, \rho_w)$ be irreducible representations of the same group $G$.
     \begin{enumerate}
-        \item If $T: (V, \rho_v) \to (W, \rho_w)$ is representation homomoprhism, then $T=0$ or $T$ is representation isomophism.
-        \item If $G$ is finite and $T : (V, \rho_v) \to (V, rho_v) $ is endomorphism (homorphism of presentation to itself) then $T = \lambda I$ for some colmplex number $\lambda$.
+        \item If $T: (V, \rho_v) \to (W, \rho_w)$ is representation homomoprhism, then $T=0$ or $T$ is representation isomorphism.
+        \item If $G$ is finite and $T : (V, \rho_v) \to (V, \rho_v) $ is endomorphism (homomorphism of presentation to itself) then $T = \lambda I$ for some complex number $\lambda$.
     \end{enumerate}
 \end{lemma}
 \begin{proof} 
     1. Suppose there is a nontrivial representation homomoprhism $f : V \to W$. Our goal is to prove that $V \not\simeq W$. Consider vector subspace $\ker f \subset V$, since the map is representation homomoprhism the kernel is subrepresentation, thus $\ker f = 0$ or $\ker f = T$. Thus $f$ has to be trivial, which is the desired contradiction. 
     
-    2. Since $T$ is a linear operator, we can consider an eigenvalue $\lambda$ of $T$. Here we use $k = \mathbb{C}$ to ensure that eigenvalue exists. Consider a map $g = f - \lambda \cdot \id$, which would be a representation. If $x$ is eigenvector of $f$, then $g x = 0$, and thus $\ker g$ is non trivial. Since we know that 
-    $\ker g$ is either 0 or fullspace as subrepresentation, we have $\ker g = V$ and $g$ is trivial, i.e. $f = \lambda I$.
+    2. Since $T$ is a linear operator, we can consider an eigenvalue $\lambda$ of $T$. 
+    Here we use $k = \mathbb{C}$ to ensure that eigenvalue exists. 
+    Consider a map $g = f - \lambda \cdot \id$, which would be a representation. 
+    If $x$ is eigenvector of $f$, then $g x = 0$, and thus $\ker g$ is non trivial. Since we know that 
+    $\ker g$ is either 0 or entire space as subrepresentation, we have $\ker g = V$ and $g$ is trivial, i.e. $f = \lambda I$.
 \end{proof}
 
+\section{Induced representations and Characters, examples}
 
+Let $G$ be a group, that acts on finite set X. Let $L(X)$ be a space of functions on $X$. Then we have representation $T$ on $L(X)$ given as:
+$$\left[T(g) f\right] (x) = f (x g^{-1}) $$
+Now fix a point $x_0$ and pick a stationary subgroup $H$ of that point. Then
+$$ F(g) = f(x_0 g^{-1}) $$
+will be a subrepresentation corresponding to a subspace invariant under $H$.
 
-\section{Characters}
+Now let's generalize this observation. Let $U$ be a representation of some subgroup $H$ in finite-dimensional $V$.
+Consider a space of functions $F$, s.t. $F\ni f: G \to V$, s.t.
+$$F(hg) = U(h) \cdot F(g)$$
+where $h\in H, g \in G$.
 
-\section{Burnside's lemma?}
+\begin{definition}
+    $F$ defined as above called induced representation of $G$ by subgroup $H$.
+\end{definition}
 
-\section{Representations of symmetric group. Youngs table. Symmetric polynomials. Schur-Weyl duality. }
+Now let us focus on representation in finite vector spaces over $\mathbb{C}$.
+Let $T$ be representation of group $G$, then the character $\chi$:
+\begin{definition}
+    $$\chi_T (g) = \Tr \ T (g) $$
+\end{definition}
+\begin{theorem}
+Irreducible of $G$ in finite dimensional space if fully defined by character function.
+\end{theorem}
+What is $\chi (e)$ in terms of the representation space?
 
-\section{Connection to Galois thory?}
+Since $e \mapsto I_n$ in n-dimensional $V$ and $\Tr (I_n) = n$, $\chi(e) = n$.
 
+\begin{definition} 
+    We define scalar product of two functions $f,y: G \to \mathbb{C}$:
+    $$(f,y) := \frac{1}{|G|} \sum_{g \in G} f(g) \overline{y(g)}$$
+\end{definition}
+
+\begin{lemma}
+    Let $G$ be a group acting on finite set $X$, let $T$ be corresponding permutation representation. Then the character equals to the number elements of $X$ fixed by $g$.
+\end{lemma}
+
+\begin{theorem}
+    Let $\phi, \psi$ be irreducible complex representations of a finite group $G$. Then:
+    $$(\phi, \psi)_G = 
+    \begin{cases}
+        1, if \phi \simeq \psi\\
+        0, otherwise.
+    \end{cases}
+    $$
+    Moreover, characters of all pairwise non-isomorphic irreducible complex representation form an ortho-normal basis of all functions $G\to \mathbb{C}$.
+\end{theorem}
+
+\begin{example}
+    Consider regular representation of $S_3$. 
+\end{example}
+
+The space $\mathbb{C} (S_3)$ is 6-dimensional complex space and $G$ acts on it by multiplication. Then regular representation is built from multiplication table:
+
+{
+\center
+\includegraphics[width=0.8\textwidth]{s3table.png}
+
+\begin{equation*}
+    T (e) = \begin{pmatrix}
+        1 & 0 & 0 & 0 & 0 & 0\\ 
+        0 & 1 & 0 & 0 & 0 & 0\\
+        0 & 0 & 1 & 0 & 0 & 0\\
+        0 & 0 & 0 & 1 & 0 & 0\\
+        0 & 0 & 0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 0 & 0 & 1
+    \end{pmatrix}
+    T (1\ 2) = \begin{pmatrix}
+        0 & 1 & 0 & 0 & 0 & 0\\ 
+        1 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 0 & 0 & 1\\
+        0 & 0 & 1 & 0 & 0 & 0\\
+        0 & 0 & 0 & 1 & 0 & 0
+    \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    T (2\ 3) = \begin{pmatrix}
+        0 & 0 & 1 & 0 & 0 & 0\\ 
+        0 & 0 & 0 & 0 & 0 & 1\\
+        1 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 1 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & 0
+    \end{pmatrix}
+    T (1\ 3) = \begin{pmatrix}
+        0 & 0 & 1 & 1 & 0 & 0\\ 
+        0 & 0 & 0 & 0 & 1 & 0\\
+        0 & 0 & 0 & 0 & 0 & 1\\
+        1 & 0 & 0 & 0 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & 0\\
+        0 & 0 & 1 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    T (1\ 2\ 3) = \begin{pmatrix}
+        0 & 0 & 0 & 0 & 0 & 1\\ 
+        0 & 0 & 1 & 0 & 0 & 0\\
+        0 & 0 & 0 & 1 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & 0\\
+        1 & 0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 1 & 0
+    \end{pmatrix}
+    T (1\ 3\ 2) = \begin{pmatrix}
+        0 & 0 & 0 & 1 & 1 & 0\\ 
+        0 & 0 & 0 & 0 & 0 & 0\\
+        0 & 1 & 0 & 0 & 0 & 0\\
+        0 & 0 & 1 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0 & 1\\
+        1 & 0 & 0 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation*}
+}
+Note that it's not irreducible. Let's compute the character to verify it.
+
+As expected, $\chi_T (g) = 6 \delta_{g, e}$, but then $$(\chi_T, \chi_T) = \frac{1}{6} \sum_{g \in G} \chi_T(g) \overline{\chi_T(g)} = \frac{36}{6} = 6 \neq 1.$$
+
+\begin{lemma}
+    All irreducible representation of $S_3$ are trivial, sign or standard (irreducible 2-dimensional) 
+\end{lemma}
+Then regular representation can be decomposed into irreducible:
+
+$$ \text{T = Sign} \oplus \text{Trivial} \oplus \text{Standart}^{\otimes 2}$$
+
+On the same example let's talk about induced representation. We know that $S_2 \subset S_3$ and let $T$ be a a sign representation.
+Induce a representation on $S_3$ from that. 
+We have:
+$$F(e) = 1, F(1\ 2) = -1, F(23) = -1, F(13) = -1$$
+then:
+$$F(123) = F( (23) (13)) = -1 \cdot (-1); F(132) = F((23) (12)) = 1$$
+
+and $F$ is induced representation.
+
+\section{Average on the cube problem}
+
+\begin{example}
+    Pick a die. Each step we replace the number on each side with average of neighbor sides.
+What would be the numbers written after long time?
+\end{example}
+
+\begin{lemma}
+    Group $G$ of orientation-preserving symmetries of cube is isomorphic to $S_4$.
+\end{lemma}
+Now let's fix one face on the cube. The subgroup $Z/4Z$ of $S_4$ that preserve particular side. To be specific it's group generated by 4-cycle $(1234)$.
+
+Now define $V_r$ to be the space of all functions defined on the faces of our cube, which is the $6-$ dimensional real space. Now pick the trivial representation of $Z/4Z$ in $V_r$ and induce a representation $T$ on $G$.
+
+Consider an operator $$[Lf] (x) = \frac{1}{4}\sum_{\substack{y\in CF \\ (x, y)}} f(y),$$
+where $x \in CF$ is particular face in the set $CF$ of cube faces, $f$ is some function on the set of spaces and $L$ is an operator on the space of functions.
+
+\begin{lemma}
+    Action of $L$ and action of $G$ commute.
+\end{lemma}
+
+Let's pay closer attention to the representation $T$. It's induced from representation of $Z/4Z$, thus we can calculate induced character:
+
+$$\chi_{\text{Ind(s)}} = \frac{1}{4} \sum_{\substack{t \in S_4,\\ t^{-1}} s t \in Z_4 } \chi_e (t^{-1} s t) = \frac{4}{4} \cdot (\text{size of conjugacy class}) = 3$$
+
+So we have 3 irreducible components in $T$, say  $T = T_1 \oplus T_2 \oplus T_3$.
+For each subrepresentation there should be a corresponding invariant subspace. It's easy to find them:
+\begin{itemize}
+    \item $V_1$: constant functions
+    \item $V_2$: even functions which sum (over cube) to 0
+    \item $V_3$: odd functions,
+\end{itemize} 
+where even and odd is with respect to the opposite face.
+
+Notice that on constant function clearly operator is identity. To figure out how operator acts on second subspace, pick specific function from $V_2$: $1$ on the first pair of cube's faces, $0$ on the other, and $-1$ on the last one. Then our operator acts as multiplication by ($\frac{-1}{2}$).
+For a representative of function $V_3$: fix a face and assign $1$ to it, $-1$ to opposite face, and $0$ to all other faces. Thus $\lambda_3 = 0$.
+
+Since as $N \to \infty$ on $V_3$ and $V_2$ $\lambda^N \to 0$, the limit behavior is only defined by $V_1$. So we just need to calculate projection:
+$$ f_{V_1} = \frac{1}{6} \sum {f_i \cdot 1} = 3.5$$
+which is the desired set of numbers.
 
 
 \end{document}
